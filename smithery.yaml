@@ -1,0 +1,10 @@
+name: regex-ai-mcp
+description: "MEOK AI Labs — Regex tools for AI agents and LLMs"
+vendor: MEOK AI Labs
+homepage: https://meok.ai
+repository: https://github.com/CSOAI-ORG/regex-ai-mcp
+license: MIT
+categories: [Developer Tools, Text Processing]
+tags: [regex, regular-expression, pattern-matching, text-search, regex-builder]
+runtime: python
+entrypoint: server.py
