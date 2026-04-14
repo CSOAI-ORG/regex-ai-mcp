@@ -1,10 +1,46 @@
 name: regex-ai-mcp
-description: "MEOK AI Labs — Regex tools for AI agents and LLMs"
-vendor: MEOK AI Labs
-homepage: https://meok.ai
-repository: https://github.com/CSOAI-ORG/regex-ai-mcp
-license: MIT
-categories: [Developer Tools, Text Processing]
-tags: [regex, regular-expression, pattern-matching, text-search, regex-builder]
-runtime: python
-entrypoint: server.py
+description: MCP server for regular expression helper tools.
+version: 1.0.0
+tools:
+- name: build_regex
+  description: 'Build common regex patterns. Types: email, url, phone, ipv4, date_iso,
+    hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern.'
+  parameters:
+  - name: pattern_type
+    type: string
+    required: true
+  - name: custom_options
+    type: string
+    required: false
+- name: test_regex
+  description: 'Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline),
+    s(dotall).'
+  parameters:
+  - name: pattern
+    type: string
+    required: true
+  - name: test_string
+    type: string
+    required: true
+  - name: flags
+    type: string
+    required: false
+- name: explain_regex
+  description: Explain a regex pattern in plain English.
+  parameters:
+  - name: pattern
+    type: string
+    required: true
+- name: extract_matches
+  description: Extract all matches of a pattern from text. group=0 for full match,
+    1+ for capture groups.
+  parameters:
+  - name: pattern
+    type: string
+    required: true
+  - name: text
+    type: string
+    required: true
+  - name: group
+    type: integer
+    required: false

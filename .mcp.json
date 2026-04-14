@@ -1,23 +1,84 @@
 {
   "name": "regex-ai-mcp",
-  "description": "MEOK AI Labs \u2014 Regex tools for AI agents and LLMs",
-  "vendor": "MEOK AI Labs",
-  "homepage": "https://meok.ai",
-  "repository": "https://github.com/CSOAI-ORG/regex-ai-mcp",
-  "runtime": "python",
-  "entrypoint": "server.py",
+  "description": "MCP server for regular expression helper tools.",
+  "version": "1.0.0",
   "tools": [
-    "build_regex",
-    "test_regex",
-    "explain_regex",
-    "extract_matches"
-  ],
-  "categories": [
-    "Developer Tools",
-    "Text Processing"
-  ],
-  "pricing": {
-    "free": "50 calls/day",
-    "pro": "$9/mo"
-  }
+    {
+      "name": "build_regex",
+      "description": "Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pattern_type": {
+            "type": "string"
+          },
+          "custom_options": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "pattern_type"
+        ]
+      }
+    },
+    {
+      "name": "test_regex",
+      "description": "Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string"
+          },
+          "test_string": {
+            "type": "string"
+          },
+          "flags": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "pattern",
+          "test_string"
+        ]
+      }
+    },
+    {
+      "name": "explain_regex",
+      "description": "Explain a regex pattern in plain English.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "pattern"
+        ]
+      }
+    },
+    {
+      "name": "extract_matches",
+      "description": "Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "group": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "pattern",
+          "text"
+        ]
+      }
+    }
+  ]
 }

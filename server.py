@@ -1,4 +1,9 @@
 """Regex AI MCP Server — Regular expression helper tools."""
+
+import sys, os
+sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
+from auth_middleware import check_access
+
 import re
 import time
 from typing import Any
@@ -31,8 +36,12 @@ COMMON_PATTERNS = {
 }
 
 @mcp.tool()
-def build_regex(pattern_type: str, custom_options: str = "") -> dict[str, Any]:
+def build_regex(pattern_type: str, custom_options: str = "", api_key: str = "") -> dict[str, Any]:
     """Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _rate_check("build_regex"):
         return {"error": "Rate limit exceeded (50/day)"}
     if pattern_type in COMMON_PATTERNS:
@@ -44,8 +53,12 @@ def build_regex(pattern_type: str, custom_options: str = "") -> dict[str, Any]:
     return {"available_types": list(COMMON_PATTERNS.keys()), "error": f"Unknown pattern type: {pattern_type}"}
 
 @mcp.tool()
-def test_regex(pattern: str, test_string: str, flags: str = "") -> dict[str, Any]:
+def test_regex(pattern: str, test_string: str, flags: str = "", api_key: str = "") -> dict[str, Any]:
     """Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall)."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _rate_check("test_regex"):
         return {"error": "Rate limit exceeded (50/day)"}
     flag_map = {"i": re.IGNORECASE, "m": re.MULTILINE, "s": re.DOTALL}
@@ -66,8 +79,12 @@ def test_regex(pattern: str, test_string: str, flags: str = "") -> dict[str, Any
     return {"pattern": pattern, "test_string": test_string, "matches": matches, "match_count": len(matches), "is_match": len(matches) > 0}
 
 @mcp.tool()
-def explain_regex(pattern: str) -> dict[str, Any]:
+def explain_regex(pattern: str, api_key: str = "") -> dict[str, Any]:
     """Explain a regex pattern in plain English."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _rate_check("explain_regex"):
         return {"error": "Rate limit exceeded (50/day)"}
     explanations = []
@@ -118,8 +135,12 @@ def explain_regex(pattern: str) -> dict[str, Any]:
     return {"pattern": pattern, "is_valid": valid, "explanation": explanations, "token_count": len(explanations)}
 
 @mcp.tool()
-def extract_matches(pattern: str, text: str, group: int = 0) -> dict[str, Any]:
+def extract_matches(pattern: str, text: str, group: int = 0, api_key: str = "") -> dict[str, Any]:
     """Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _rate_check("extract_matches"):
         return {"error": "Rate limit exceeded (50/day)"}
     try:
