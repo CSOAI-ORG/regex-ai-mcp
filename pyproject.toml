@@ -22,3 +22,6 @@ Repository = "https://github.com/CSOAI-ORG/regex-ai-mcp"
 [tool.hatch.build.targets.wheel]
 packages = ["."]
 only-include = ["server.py"]
+
+[project.scripts]
+regex_ai_mcp = "server:main"
