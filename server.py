@@ -9,6 +9,19 @@ import time
 from typing import Any
 from mcp.server.fastmcp import FastMCP
 
+import json
+from datetime import datetime, timezone
+from collections import defaultdict
+
+FREE_DAILY_LIMIT = 15
+_usage = defaultdict(list)
+def _rl(c="anon"):
+    now = datetime.now(timezone.utc)
+    _usage[c] = [t for t in _usage[c] if (now-t).total_seconds() < 86400]
+    if len(_usage[c]) >= FREE_DAILY_LIMIT: return json.dumps({"error": f"Limit {FREE_DAILY_LIMIT}/day"})
+    _usage[c].append(now); return None
+
+
 mcp = FastMCP("regex-ai", instructions="MEOK AI Labs MCP Server")
 _calls: dict[str, list[float]] = {}
 DAILY_LIMIT = 50
@@ -41,6 +54,7 @@ def build_regex(pattern_type: str, custom_options: str = "", api_key: str = "") 
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _rate_check("build_regex"):
         return {"error": "Rate limit exceeded (50/day)"}
@@ -58,6 +72,7 @@ def test_regex(pattern: str, test_string: str, flags: str = "", api_key: str = "
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _rate_check("test_regex"):
         return {"error": "Rate limit exceeded (50/day)"}
@@ -84,6 +99,7 @@ def explain_regex(pattern: str, api_key: str = "") -> dict[str, Any]:
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _rate_check("explain_regex"):
         return {"error": "Rate limit exceeded (50/day)"}
@@ -140,6 +156,7 @@ def extract_matches(pattern: str, text: str, group: int = 0, api_key: str = "") 
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _rate_check("extract_matches"):
         return {"error": "Rate limit exceeded (50/day)"}
