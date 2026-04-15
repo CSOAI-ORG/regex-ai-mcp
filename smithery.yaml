@@ -1,5 +1,6 @@
 name: regex-ai-mcp
-description: MEOK AI Labs MCP Server
+description: MCP server for regex ai. Features build regex, test regex, explain regex.
+  From MEOK AI Labs.
 version: 1.0.0
 tools:
 - name: build_regex
