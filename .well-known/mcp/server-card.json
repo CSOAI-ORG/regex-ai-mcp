@@ -1,0 +1,52 @@
+{
+  "name": "regex-ai",
+  "description": "Regex Ai tools powered by MEOK AI Labs.",
+  "version": "1.0.0",
+  "protocol_version": "2025-11-25",
+  "publisher": {
+    "name": "MEOK AI Labs",
+    "url": "https://meok.ai",
+    "email": "nicholas@meok.ai"
+  },
+  "repository": "https://github.com/CSOAI-ORG/regex-ai-mcp",
+  "license": "MIT",
+  "transport": [
+    "stdio",
+    "streamable-http"
+  ],
+  "authentication": {
+    "type": "api-key",
+    "free_tier": true,
+    "free_limit": "15 calls/day"
+  },
+  "tools": [
+    {
+      "name": "build_regex",
+      "description": "Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern."
+    },
+    {
+      "name": "test_regex",
+      "description": "Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall)."
+    },
+    {
+      "name": "explain_regex",
+      "description": "Explain a regex pattern in plain English."
+    },
+    {
+      "name": "extract_matches",
+      "description": "Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups."
+    }
+  ],
+  "categories": [
+    "AI & Machine Learning"
+  ],
+  "pricing": {
+    "free": {
+      "calls_per_day": 15
+    },
+    "pro": {
+      "price": "$29/month",
+      "url": "https://meok.ai/pricing"
+    }
+  }
+}
