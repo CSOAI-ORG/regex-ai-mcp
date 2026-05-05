@@ -1,67 +1,38 @@
-# Regex Ai
+<div align="center">
 
-> By [MEOK AI Labs](https://meok.ai) — MEOK AI Labs MCP Server
+[![GitHub stars](https://img.shields.io/github/stars/CSOAI-ORG/regex-ai-mcp)](https://github.com/CSOAI-ORG/regex-ai-mcp/stargazers)
 
-Regex AI MCP Server — Regular expression helper tools.
+# uregexU aiU mcp
+
+**Regex AI MCP Server — Regular expression helper tools.**
+
+[![npm version](https://img.shields.io/npm/v/@meok-ai/regex-ai-mcp)](https://www.npmjs.com/package/@meok-ai/regex-ai-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![MEOK AI Labs](https://img.shields.io/badge/MEOK_AI_Labs-255+_servers-purple)](https://meok.ai)
+
+[Installation](#installation) · [Docs](https://csoai.org) · [Report Bug](https://github.com/CSOAI-ORG/regex-ai-mcp/issues)
+
+</div>
+
+---
 
 ## Installation
 
 ```bash
 pip install regex-ai-mcp
+# or
+npm install -g @meok-ai/regex-ai-mcp
 ```
 
-## Usage
+## Quick Start
 
-```bash
-# Run standalone
-python server.py
+See the project repository for full documentation and examples.
 
-# Or via MCP
-mcp install regex-ai-mcp
-```
+## Enterprise Support
 
-## Tools
-
-### `build_regex`
-Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern.
-
-**Parameters:**
-- `pattern_type` (str)
-- `custom_options` (str)
-
-### `test_regex`
-Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall).
-
-**Parameters:**
-- `pattern` (str)
-- `test_string` (str)
-- `flags` (str)
-
-### `explain_regex`
-Explain a regex pattern in plain English.
-
-**Parameters:**
-- `pattern` (str)
-
-### `extract_matches`
-Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups.
-
-**Parameters:**
-- `pattern` (str)
-- `text` (str)
-- `group` (int)
-
-
-## Authentication
-
-Free tier: 15 calls/day. Upgrade at [meok.ai/pricing](https://meok.ai/pricing) for unlimited access.
-
-## Links
-
-- **Website**: [meok.ai](https://meok.ai)
-- **GitHub**: [CSOAI-ORG/regex-ai-mcp](https://github.com/CSOAI-ORG/regex-ai-mcp)
-- **PyPI**: [pypi.org/project/regex-ai-mcp](https://pypi.org/project/regex-ai-mcp/)
+- 📧 nicholas@csoai.org
+- 🌐 [CSOAI.org](https://csoai.org)
 
 ## License
 
-MIT — MEOK AI Labs
+MIT © [CSOAI](https://csoai.org)
