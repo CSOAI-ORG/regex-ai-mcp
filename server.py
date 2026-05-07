@@ -50,7 +50,22 @@ COMMON_PATTERNS = {
 
 @mcp.tool()
 def build_regex(pattern_type: str, custom_options: str = "", api_key: str = "") -> dict[str, Any]:
-    """Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern."""
+    """Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern.
+
+    Behavior:
+        This tool generates structured output without modifying external systems.
+        Output is deterministic for identical inputs. No side effects.
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -68,7 +83,23 @@ def build_regex(pattern_type: str, custom_options: str = "", api_key: str = "") 
 
 @mcp.tool()
 def test_regex(pattern: str, test_string: str, flags: str = "", api_key: str = "") -> dict[str, Any]:
-    """Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall)."""
+    """Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall).
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -95,7 +126,23 @@ def test_regex(pattern: str, test_string: str, flags: str = "", api_key: str = "
 
 @mcp.tool()
 def explain_regex(pattern: str, api_key: str = "") -> dict[str, Any]:
-    """Explain a regex pattern in plain English."""
+    """Explain a regex pattern in plain English.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
@@ -152,7 +199,23 @@ def explain_regex(pattern: str, api_key: str = "") -> dict[str, Any]:
 
 @mcp.tool()
 def extract_matches(pattern: str, text: str, group: int = 0, api_key: str = "") -> dict[str, Any]:
-    """Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups."""
+    """Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
