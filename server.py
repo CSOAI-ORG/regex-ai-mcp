@@ -65,6 +65,12 @@ def build_regex(pattern_type: str, custom_options: str = "", api_key: str = "") 
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        pattern_type (str): The pattern type to analyze or process.
+        custom_options (str): The custom options to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -113,6 +119,13 @@ def test_regex(pattern: str, test_string: str, flags: str = "", api_key: str = "
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        pattern (str): The pattern to analyze or process.
+        test_string (str): The test string to analyze or process.
+        flags (str): The flags to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -170,6 +183,11 @@ def explain_regex(pattern: str, api_key: str = "") -> dict[str, Any]:
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        pattern (str): The pattern to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -257,6 +275,13 @@ def extract_matches(pattern: str, text: str, group: int = 0, api_key: str = "") 
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        pattern (str): The pattern to analyze or process.
+        text (str): The text to analyze or process.
+        group (int): The group to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
