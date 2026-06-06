@@ -1,0 +1,31 @@
+# Regex Ai MCP
+
+> regex-ai-mcp MCP — AI-powered automation tool
+
+`regex-ai-mcp` is a Model Context Protocol (MCP) server by MEOK AI Labs.
+
+## Install
+
+```bash
+pip install regex-ai-mcp
+```
+
+Or run without installing:
+
+```bash
+uvx regex-ai-mcp
+```
+
+## Tools
+
+- `build_regex` — Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern.
+- `test_regex` — Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall).
+- `explain_regex` — Explain a regex pattern in plain English.
+- `extract_matches` — Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups.
+
+## Links
+
+- Source: https://github.com/CSOAI-ORG/regex-ai-mcp
+- PyPI: https://pypi.org/project/regex-ai-mcp/
+- MEOK AI Labs: https://meok.ai
+- Council of AI: https://councilof.ai
