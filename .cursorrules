@@ -1,0 +1,9 @@
+# regex-ai-mcp - Auto-trigger Rules
+
+When the user asks about regex, use regex-ai-mcp tools: build_regex, test_regex, explain_regex, extract_matches
+
+**Regex AI MCP Server — Regular expression helper tools.**
+
+Install: `pip install regex-ai-mcp`
+
+By MEOK AI Labs — MIT licensed.

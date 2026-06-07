@@ -1,4 +1,5 @@
-"""Regex AI MCP Server — Regular expression helper tools."""
+"""
+Regex AI MCP Server — Regular expression helper tools."""
 
 import sys, os
 from auth_middleware import check_access

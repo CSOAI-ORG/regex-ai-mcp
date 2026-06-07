@@ -1,0 +1,25 @@
+{
+  "name": "regex-ai-mcp",
+  "title": "Regex Ai Mcp",
+  "description": "MCP server for regex ai. Features build regex, test regex, explain regex. From MEOK AI Labs.",
+  "version": "1.0.7",
+  "homepage": "https://meok.ai",
+  "license": "MIT",
+  "transport": {
+    "type": "stdio"
+  },
+  "tools": [
+    {
+      "name": "build_regex"
+    },
+    {
+      "name": "test_regex"
+    },
+    {
+      "name": "explain_regex"
+    },
+    {
+      "name": "extract_matches"
+    }
+  ]
+}

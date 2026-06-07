@@ -1,31 +1,33 @@
-# Regex Ai MCP
-
-> regex-ai-mcp MCP — AI-powered automation tool
-
-`regex-ai-mcp` is a Model Context Protocol (MCP) server by MEOK AI Labs.
+# regex-ai-mcp
+# **Regex AI MCP Server — Regular expression helper tools.**
 
 ## Install
-
 ```bash
 pip install regex-ai-mcp
 ```
 
-Or run without installing:
-
-```bash
-uvx regex-ai-mcp
-```
+## Auth & Rate Limits
+- Free tier: 10 calls/day. No API key required.
+- Pro tier (£79/mo): unlimited + signed attestations.
+- Enterprise (£1,499/mo): white-label.
 
 ## Tools
 
-- `build_regex` — Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern.
-- `test_regex` — Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall).
-- `explain_regex` — Explain a regex pattern in plain English.
-- `extract_matches` — Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups.
+### `build_regex`
+Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern.
 
-## Links
+### `test_regex`
+Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall).
 
-- Source: https://github.com/CSOAI-ORG/regex-ai-mcp
-- PyPI: https://pypi.org/project/regex-ai-mcp/
-- MEOK AI Labs: https://meok.ai
-- Council of AI: https://councilof.ai
+### `explain_regex`
+Explain a regex pattern in plain English.
+
+### `extract_matches`
+Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups.
+
+
+## Maintainer
+MEOK AI Labs · hello@meok.ai · https://meok.ai · MIT licensed
+
+## Pairs with
+Governance moat: pair this tool with any of MEOK's 38 governance MCPs (EU AI Act, DORA, NIS2, CRA, GDPR, ISO 42001, etc.) for full compliance coverage.
