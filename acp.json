@@ -1,0 +1,22 @@
+{
+  "acpVersion": "0.1",
+  "agent": {
+    "name": "regex-ai-mcp",
+    "description": "Regex Ai MCP Server by MEOK AI Labs",
+    "version": "1.0.7",
+    "provider": "MEOK AI Labs",
+    "interfaces": [
+      {
+        "type": "mcp",
+        "transport": "stdio",
+        "package": "regex-ai-mcp"
+      }
+    ],
+    "capabilities": [
+      "build_regex",
+      "test_regex",
+      "explain_regex",
+      "extract_matches"
+    ]
+  }
+}

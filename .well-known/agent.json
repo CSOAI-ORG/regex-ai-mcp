@@ -1,0 +1,59 @@
+{
+  "name": "regex-ai-mcp",
+  "description": "Regex Ai MCP Server by MEOK AI Labs",
+  "url": "https://proofof.ai/scorecard/regex-ai-mcp.html",
+  "version": "1.0.7",
+  "protocolVersion": "0.2.0",
+  "provider": {
+    "organization": "MEOK AI Labs",
+    "url": "https://meok.ai"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text"
+  ],
+  "defaultOutputModes": [
+    "text"
+  ],
+  "skills": [
+    {
+      "id": "build_regex",
+      "name": "Build Regex",
+      "description": "build_regex via regex-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "test_regex",
+      "name": "Test Regex",
+      "description": "test_regex via regex-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "explain_regex",
+      "name": "Explain Regex",
+      "description": "explain_regex via regex-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "extract_matches",
+      "name": "Extract Matches",
+      "description": "extract_matches via regex-ai-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    }
+  ]
+}
