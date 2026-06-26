@@ -113,3 +113,28 @@ Free tier: 10 calls/day per MCP. Pro tier (£79/mo): unlimited + cryptographical
 
 <!-- BUY-LADDER:END -->
 
+
+
+## Configuration
+
+Add to your `claude_desktop_config.json` (Claude Desktop) or your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "regex-ai-mcp": {
+      "command": "uvx",
+      "args": ["regex-ai-mcp"]
+    }
+  }
+}
+```
+
+Or: `pip install regex-ai-mcp` then run the `regex-ai-mcp` command (stdio transport).
+
+## Examples
+
+Once configured, ask your assistant, for example:
+- "Use `build_regex` to …"
+- "Use `test_regex` to …"
+- "Use `explain_regex` to …"
