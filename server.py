@@ -1,5 +1,3 @@
-import urllib.request as _meter_urlreq
-import urllib.error as _meter_urlerr
 """
 Regex AI MCP Server — Regular expression helper tools."""
 
@@ -20,7 +18,7 @@ STRIPE_199 = "https://meok.ai/pricing"
 def _add_upgrade_tail(response, tier="free"):
     """Append upgrade nudge to free-tier success responses."""
     if isinstance(response, dict) and tier == "free":
-        response["_upgrade_note"] = "Pro tier: unlimited calls + priority support. Upgrade: " + STRIPE_199
+        response["_upgrade_note"] = "Current usage terms: " + STRIPE_199
     return response
 
 
@@ -60,32 +58,14 @@ COMMON_PATTERNS = {
 }
 
 
-def _server_meter_check(api_key: str = "") -> dict:
-    """Calls the live /verify endpoint for server-side metering. Fail-open."""
-    try:
-        data = json.dumps({"api_key": api_key, "tool": ""}).encode()
-        req = _meter_urlreq.Request(_METER_URL, data=data,
-            headers={"Content-Type": "application/json"}, method="POST")
-        with _meter_urlreq.urlopen(req, timeout=2.5) as r:
-            d = json.loads(r.read())
-            if isinstance(d, dict) and "allowed" in d:
-                return d
-    except Exception:
-        pass
-    return {"allowed": True, "tier": "anonymous", "remaining": 200, "upgrade_url": "https://meok.ai/pricing"}
-
-
-_METER_URL = "https://proofof.ai/verify"
-
-
 @mcp.tool()
 def build_regex(pattern_type: str, custom_options: str = "", api_key: str = "") -> dict[str, Any]:
     """Build common regex patterns. Types: email, url, phone, ipv4, date_iso, hex_color, credit_card, ssn, zip_us, uuid. Or describe a custom pattern.
 
     Behavior:
         This tool generates structured output without modifying external systems.
-        Output is deterministic for identical inputs. No side effects.
-        Free tier: 10/day rate limit. Pro tier: unlimited.
+        Core pattern calculation is deterministic; access and rate checks update local counters.
+        Local middleware applies per-tier daily limits; see auth_middleware.py.
         No authentication required for basic usage.
 
     When to use:
@@ -102,19 +82,20 @@ def build_regex(pattern_type: str, custom_options: str = "", api_key: str = "") 
         api_key (str): The api key to analyze or process.
 
     Behavioral Transparency:
-        - Side Effects: This tool is read-only and produces no side effects. It does not modify
-          any external state, databases, or files. All output is computed in-memory and returned
-          directly to the caller.
-        - Authentication: No authentication required for basic usage. Pro/Enterprise tiers
-          require a valid MEOK API key passed via the MEOK_API_KEY environment variable.
-        - Rate Limits: Free tier: 10 calls/day. Pro tier: unlimited. Rate limit headers are
-          included in responses (X-RateLimit-Remaining, X-RateLimit-Reset).
-        - Error Handling: Returns structured error objects with 'error' key on failure.
-          Never raises unhandled exceptions. Invalid inputs return descriptive validation errors.
-        - Idempotency: Fully idempotent — calling with the same inputs always produces the
-          same output. Safe to retry on timeout or transient failure.
-        - Data Privacy: No input data is stored, logged, or transmitted to external services.
-          All processing happens locally within the MCP server process.
+        - Side Effects: The calculation does not change application data. Access middleware
+          writes a hashed access-key/day counter to ~/.meok/usage.json on each allowed call.
+          Core output is calculated in-memory and returned to the caller.
+        - Authentication: Anonymous use is available. Optional api_key argument is checked
+          against local ~/.meok/api_keys.json; no environment variable is read here.
+        - Rate Limits: Local free-tier access is limited to 10 calls/day per hashed
+          identifier, with further in-process limits. No HTTP headers are issued here.
+        - Error Handling: Access and validation failures generally return structured
+          error objects. Do not treat tool failures as compliance determinations.
+        - Idempotency: Core computation is deterministic for the same inputs, but calls
+          advance local rate counters. A retry may be limited or rejected.
+        - Data Privacy: Supplied test data is processed locally by this server.
+          Access middleware stores only hashed key/day counters locally;
+          the unused network meter is removed in this version.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -136,10 +117,10 @@ def test_regex(pattern: str, test_string: str, flags: str = "", api_key: str = "
     """Test a regex pattern against a string. Flags: i(gnorecase), m(ultiline), s(dotall).
 
     Behavior:
-        This tool is read-only and stateless — it produces analysis output
-        without modifying any external systems, databases, or files.
-        Safe to call repeatedly with identical inputs (idempotent).
-        Free tier: 10/day rate limit. Pro tier: unlimited.
+        Core processing does not modify external application data, but the access
+        middleware updates local usage counters on each allowed request.
+        Retrying an identical input may consume another permitted call.
+        Local middleware applies per-tier daily limits; see auth_middleware.py.
         No authentication required for basic usage.
 
     When to use:
@@ -157,19 +138,20 @@ def test_regex(pattern: str, test_string: str, flags: str = "", api_key: str = "
         api_key (str): The api key to analyze or process.
 
     Behavioral Transparency:
-        - Side Effects: This tool is read-only and produces no side effects. It does not modify
-          any external state, databases, or files. All output is computed in-memory and returned
-          directly to the caller.
-        - Authentication: No authentication required for basic usage. Pro/Enterprise tiers
-          require a valid MEOK API key passed via the MEOK_API_KEY environment variable.
-        - Rate Limits: Free tier: 10 calls/day. Pro tier: unlimited. Rate limit headers are
-          included in responses (X-RateLimit-Remaining, X-RateLimit-Reset).
-        - Error Handling: Returns structured error objects with 'error' key on failure.
-          Never raises unhandled exceptions. Invalid inputs return descriptive validation errors.
-        - Idempotency: Fully idempotent — calling with the same inputs always produces the
-          same output. Safe to retry on timeout or transient failure.
-        - Data Privacy: No input data is stored, logged, or transmitted to external services.
-          All processing happens locally within the MCP server process.
+        - Side Effects: The calculation does not change application data. Access middleware
+          writes a hashed access-key/day counter to ~/.meok/usage.json on each allowed call.
+          Core output is calculated in-memory and returned to the caller.
+        - Authentication: Anonymous use is available. Optional api_key argument is checked
+          against local ~/.meok/api_keys.json; no environment variable is read here.
+        - Rate Limits: Local free-tier access is limited to 10 calls/day per hashed
+          identifier, with further in-process limits. No HTTP headers are issued here.
+        - Error Handling: Access and validation failures generally return structured
+          error objects. Do not treat tool failures as compliance determinations.
+        - Idempotency: Core computation is deterministic for the same inputs, but calls
+          advance local rate counters. A retry may be limited or rejected.
+        - Data Privacy: Supplied test data is processed locally by this server.
+          Access middleware stores only hashed key/day counters locally;
+          the unused network meter is removed in this version.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -200,10 +182,10 @@ def explain_regex(pattern: str, api_key: str = "") -> dict[str, Any]:
     """Explain a regex pattern in plain English.
 
     Behavior:
-        This tool is read-only and stateless — it produces analysis output
-        without modifying any external systems, databases, or files.
-        Safe to call repeatedly with identical inputs (idempotent).
-        Free tier: 10/day rate limit. Pro tier: unlimited.
+        Core processing does not modify external application data, but the access
+        middleware updates local usage counters on each allowed request.
+        Retrying an identical input may consume another permitted call.
+        Local middleware applies per-tier daily limits; see auth_middleware.py.
         No authentication required for basic usage.
 
     When to use:
@@ -219,19 +201,20 @@ def explain_regex(pattern: str, api_key: str = "") -> dict[str, Any]:
         api_key (str): The api key to analyze or process.
 
     Behavioral Transparency:
-        - Side Effects: This tool is read-only and produces no side effects. It does not modify
-          any external state, databases, or files. All output is computed in-memory and returned
-          directly to the caller.
-        - Authentication: No authentication required for basic usage. Pro/Enterprise tiers
-          require a valid MEOK API key passed via the MEOK_API_KEY environment variable.
-        - Rate Limits: Free tier: 10 calls/day. Pro tier: unlimited. Rate limit headers are
-          included in responses (X-RateLimit-Remaining, X-RateLimit-Reset).
-        - Error Handling: Returns structured error objects with 'error' key on failure.
-          Never raises unhandled exceptions. Invalid inputs return descriptive validation errors.
-        - Idempotency: Fully idempotent — calling with the same inputs always produces the
-          same output. Safe to retry on timeout or transient failure.
-        - Data Privacy: No input data is stored, logged, or transmitted to external services.
-          All processing happens locally within the MCP server process.
+        - Side Effects: The calculation does not change application data. Access middleware
+          writes a hashed access-key/day counter to ~/.meok/usage.json on each allowed call.
+          Core output is calculated in-memory and returned to the caller.
+        - Authentication: Anonymous use is available. Optional api_key argument is checked
+          against local ~/.meok/api_keys.json; no environment variable is read here.
+        - Rate Limits: Local free-tier access is limited to 10 calls/day per hashed
+          identifier, with further in-process limits. No HTTP headers are issued here.
+        - Error Handling: Access and validation failures generally return structured
+          error objects. Do not treat tool failures as compliance determinations.
+        - Idempotency: Core computation is deterministic for the same inputs, but calls
+          advance local rate counters. A retry may be limited or rejected.
+        - Data Privacy: Supplied test data is processed locally by this server.
+          Access middleware stores only hashed key/day counters locally;
+          the unused network meter is removed in this version.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -292,10 +275,10 @@ def extract_matches(pattern: str, text: str, group: int = 0, api_key: str = "") 
     """Extract all matches of a pattern from text. group=0 for full match, 1+ for capture groups.
 
     Behavior:
-        This tool is read-only and stateless — it produces analysis output
-        without modifying any external systems, databases, or files.
-        Safe to call repeatedly with identical inputs (idempotent).
-        Free tier: 10/day rate limit. Pro tier: unlimited.
+        Core processing does not modify external application data, but the access
+        middleware updates local usage counters on each allowed request.
+        Retrying an identical input may consume another permitted call.
+        Local middleware applies per-tier daily limits; see auth_middleware.py.
         No authentication required for basic usage.
 
     When to use:
@@ -313,19 +296,20 @@ def extract_matches(pattern: str, text: str, group: int = 0, api_key: str = "") 
         api_key (str): The api key to analyze or process.
 
     Behavioral Transparency:
-        - Side Effects: This tool is read-only and produces no side effects. It does not modify
-          any external state, databases, or files. All output is computed in-memory and returned
-          directly to the caller.
-        - Authentication: No authentication required for basic usage. Pro/Enterprise tiers
-          require a valid MEOK API key passed via the MEOK_API_KEY environment variable.
-        - Rate Limits: Free tier: 10 calls/day. Pro tier: unlimited. Rate limit headers are
-          included in responses (X-RateLimit-Remaining, X-RateLimit-Reset).
-        - Error Handling: Returns structured error objects with 'error' key on failure.
-          Never raises unhandled exceptions. Invalid inputs return descriptive validation errors.
-        - Idempotency: Fully idempotent — calling with the same inputs always produces the
-          same output. Safe to retry on timeout or transient failure.
-        - Data Privacy: No input data is stored, logged, or transmitted to external services.
-          All processing happens locally within the MCP server process.
+        - Side Effects: The calculation does not change application data. Access middleware
+          writes a hashed access-key/day counter to ~/.meok/usage.json on each allowed call.
+          Core output is calculated in-memory and returned to the caller.
+        - Authentication: Anonymous use is available. Optional api_key argument is checked
+          against local ~/.meok/api_keys.json; no environment variable is read here.
+        - Rate Limits: Local free-tier access is limited to 10 calls/day per hashed
+          identifier, with further in-process limits. No HTTP headers are issued here.
+        - Error Handling: Access and validation failures generally return structured
+          error objects. Do not treat tool failures as compliance determinations.
+        - Idempotency: Core computation is deterministic for the same inputs, but calls
+          advance local rate counters. A retry may be limited or rejected.
+        - Data Privacy: Supplied test data is processed locally by this server.
+          Access middleware stores only hashed key/day counters locally;
+          the unused network meter is removed in this version.
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -354,10 +338,10 @@ if __name__ == '__main__':
     main()
 
 
-# ── MEOK pricing pointer (pay per delivered job; no subscriptions) ──────────
-# No tiers. Jobs are quoted individually at https://meok.ai/pricing.
+# ── MEOK commercial terms pointer (current terms are external) ──────────
+# The bundled local access tiers do not establish public commercial pricing; see https://meok.ai/pricing.
 import os as _meok_os
-MEOK_STRIPE_UPGRADE = "https://meok.ai/pricing"  # Pro (unlimited)
+MEOK_STRIPE_UPGRADE = "https://meok.ai/pricing"  # Check current commercial terms
 MEOK_PAYG_KEY = _meok_os.environ.get("MEOK_PAYG_KEY", "")  # set to enable PAYG (x402 / ~GBP0.05 per call)
 MEOK_PRICING = "https://meok.ai/pricing"
 
