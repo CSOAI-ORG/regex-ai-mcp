@@ -32,5 +32,11 @@ class TrustTransparencyTests(unittest.TestCase):
         self.assertNotIn("Pro tier: unlimited calls", self.server)
         self.assertNotIn("No tiers. Jobs are quoted", self.server)
 
+    def test_regulatory_scope_is_not_misrepresented(self):
+        self.assertIn("does not implement, verify, or certify compliance", self.readme)
+        self.assertNotIn("EU AI Act compliance** built-in", self.readme)
+        self.assertNotIn("Production-ready", self.readme)
+        self.assertNotIn("✅ Article 50", self.readme)
+
 if __name__ == "__main__":
     unittest.main()

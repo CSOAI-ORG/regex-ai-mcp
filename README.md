@@ -12,9 +12,9 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PyPI](https://img.shields.io/badge/PyPI-Install-3775a9)](https://pypi.org/project/regex_ai_mcp/)
 
-> regex-ai-mcp MCP — AI-powered automation tool
+> regex-ai-mcp — deterministic regular-expression helper tools exposed through MCP.
 
-regex-ai-mcp MCP — AI-powered automation tool. MIT.
+This repository provides regex pattern construction, matching and explanation utilities under the MIT licence. It is not a model evaluation, regulatory control, or compliance certification.
 
 ---
 
@@ -30,11 +30,11 @@ npx -y @smithery/cli@latest install regex-ai-mcp --client claude
 
 ## ✨ Features
 
-- MCP protocol compliant
-- Easy installation
-- Well-documented API
-- Production-ready
-- Active maintenance
+- MCP interface for regex helpers (verify client/SDK compatibility before deployment)
+- Installable open-source Python package
+- Pattern construction, matching and explanation
+- Local daily access counters (see disclosure above)
+- Not independently assessed for production security or regulatory compliance
 
 ## 📖 Documentation
 
@@ -42,17 +42,11 @@ npx -y @smithery/cli@latest install regex-ai-mcp --client claude
 - [API Reference](https://api.meok.ai)
 - [EU AI Act Compliance Guide](https://councilof.ai/compliance)
 
-## 🛡️ Compliance
+## 🛡️ Regulatory scope and limitations
 
-This MCP server is built with **EU AI Act compliance** built-in:
+This is a regex utility; **it does not implement, verify, or certify compliance with the EU AI Act**. In particular it is not an Article 9 risk management system, Article 13 transparency assessment, Article 15 accuracy/robustness assessment, Article 26 fundamental-rights impact assessment, or Article 50 watermarking mechanism. Such obligations require separate documented measures, technical and legal evaluation, and where applicable competent human review.
 
-- ✅ Article 9 — Risk Management System
-- ✅ Article 13 — Transparency & Instructions for Use
-- ✅ Article 15 — Bias Detection & Testing
-- ✅ Article 26 — FRIA Support (where applicable)
-- ✅ Article 50 — AI Content Watermarking (where applicable)
-
-Need help getting compliant? **[Book a free 15-min diagnostic →](https://cal.com/csoai/august-audit)**
+A regex match must not be presented as a GSPC score, a regulatory determination or proof of an independent assessment.
 
 ## How MEOK charges
 
@@ -87,7 +81,7 @@ MIT © [MEOK AI Labs](https://meok.ai)
 
 ## Pairs with MEOK Governance Suite
 
-Build something that touches users? You need compliance. MEOK ships 38 governance MCPs that drop in alongside this tool — EU AI Act, DORA, NIS2, CRA, GDPR, ISO 42001, FDA SaMD, MDR, Basel, MiFID II, MiCA, COPPA, and more.
+The wider MEOK ecosystem lists additional governance tools. Their presence does not establish regulatory compliance; check each tool's published capabilities, license, evidence and limitations before any deployment or reliance.
 
 ```bash
 # One-shot install of the governance pack
