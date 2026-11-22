@@ -1,6 +1,10 @@
 <!-- mcp-name: CSOAI-ORG/regex-ai-mcp -->
 [![MCP Scorecard: 74/100](https://img.shields.io/badge/proofof.ai-74%2F100-5b21b6)](https://proofof.ai/scorecard/regex-ai-mcp.html)
 
+> **Scorecard provenance:** This linked ProofOf.ai badge is a publisher-supplied assessment, **not independent certification, external adoption or a GSPC measurement**. The GSPC badge below explicitly remains UNMEASURED.
+>
+> **Local execution disclosure:** `auth_middleware.py` writes day-level usage counters keyed by a truncated hash of the supplied API key (or an anonymous marker) to `~/.meok/usage.json`. The current regex tools compute user-supplied patterns locally; there is no active remote meter in `server.py`. The package is not side-effect-free.
+
 # Regex Ai MCP
 
 [![MEOK AI Labs](https://img.shields.io/badge/MEOK-AI%20Labs-667eea)](https://meok.ai)
@@ -52,7 +56,7 @@ Need help getting compliant? **[Book a free 15-min diagnostic →](https://cal.c
 
 ## How MEOK charges
 
-MEOK has no subscriptions and no tiers. You pay per job, and only when the agreed artifact has been delivered to you. There is no public price list. See <https://meok.ai/pricing>.
+For current commercial terms, see <https://meok.ai/pricing>. This open-source server's bundled `auth_middleware.py` currently enforces local daily access tiers; those code-level tier names do not establish a commercial subscription, price or paid-service entitlement.
 
 This repository's source is MIT-licensed and free to self-host.
 
